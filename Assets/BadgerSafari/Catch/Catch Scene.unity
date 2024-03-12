@@ -618,6 +618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84907a5bf9a876b4b9851bb056d00a2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  badgerPrefab: {fileID: 5518794606329623968, guid: cbc8483e3d87da744bec637c50538b5c, type: 3}
 --- !u!1 &1502758265
 GameObject:
   m_ObjectHideFlags: 0
