@@ -1,12 +1,21 @@
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class CatchBallBehavior : MonoBehaviour
 {
     private SceneManager sceneManager;
+    private Rigidbody rb;
+    private bool thrown;
+    private int thrownCollisionLifetime = 3;
 
     void Start() {
+        XRBaseInteractable interactable = GetComponent<XRBaseInteractable>();
+        interactable.selectExited.AddListener(TriggerHaptics);
+
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
-        Debug.Log(sceneManager.GetGameState());
+        rb = GetComponent<Rigidbody>();
+        thrown = false;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -17,5 +26,27 @@ public class CatchBallBehavior : MonoBehaviour
             sceneManager.isBadgerCaught = true;
             sceneManager.ChangeGameState(GameState.End);
         }
+
+        if (thrown) {
+            thrownCollisionLifetime -= 1;
+
+            if (thrownCollisionLifetime <= 0) {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    public void TriggerHaptics(BaseInteractionEventArgs args) {
+        if (args.interactorObject is XRBaseControllerInteractor controllerInteractor) {
+            TriggerHaptics(controllerInteractor.xrController);
+            thrown = true;
+        }
+    }
+
+    public void TriggerHaptics(XRBaseController controller) {
+        // convert velocity and duration to haptic strength
+        float hapticStrength = Mathf.Clamp(rb.velocity.magnitude / 6, 0.1f, 1.0f);
+        float hapticDuration = Mathf.Clamp(rb.velocity.magnitude / 20, 0.1f, 0.3f);
+        controller.SendHapticImpulse(hapticStrength, hapticDuration);
     }
 }
