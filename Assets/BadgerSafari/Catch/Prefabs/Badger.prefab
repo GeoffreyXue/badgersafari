@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6581622552451417956}
   - component: {fileID: 8178810408367300653}
   - component: {fileID: 6579671494077527670}
+  - component: {fileID: 4077060961248915938}
   m_Layer: 0
   m_Name: Badger
   m_TagString: Badger
@@ -28,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3966465260445436105}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalRotation: {x: 2.218041e-18, y: 0.02081575, z: -4.6180195e-20, w: 0.99978334}
+  m_LocalPosition: {x: 4.724903, y: -1.12414515e-17, z: 2.53135}
   m_LocalScale: {x: 0.025000002, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &2503982132114238373
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128,8 +129,125 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &4077060961248915938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966465260445436105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ddc1a2536715a24095c464a2c394d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateMethod: 0
+  _spline: {fileID: 8362776714595251781, guid: 1bea5176df64e9748a304e9505ce399b, type: 3}
+  _autoUpdate: 1
+  _rotationModifier:
+    blend: 1
+    useClippedPercent: 0
+    keys: []
+  _offsetModifier:
+    blend: 1
+    useClippedPercent: 0
+    keys: []
+  _colorModifier:
+    blend: 1
+    useClippedPercent: 0
+    keys: []
+  _sizeModifier:
+    blend: 1
+    useClippedPercent: 0
+    keys: []
+  _clipFromSample:
+    position: {x: 4.462348, y: -7.362498e-19, z: 0.1657887}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.25801674, y: -4.2905255e-18, z: 0.96614045}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
+    percent: 0
+  _clipToSample:
+    position: {x: 4.462348, y: -7.362498e-19, z: 0.1657887}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.25801674, y: -4.2905255e-18, z: 0.96614045}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
+    percent: 1
+  _loopSamples: 0
+  _clipFrom: 0
+  _clipTo: 1
+  animClipFrom: 0
+  animClipTo: 1
+  multithreaded: 0
+  buildOnAwake: 1
+  buildOnEnable: 0
+  applyDirectionRotation: 1
+  useTriggers: 0
+  triggerGroup: 0
+  _direction: 1
+  _dontLerpDirection: 0
+  _physicsMode: 0
+  _motion:
+    _hasOffset: 0
+    _hasRotationOffset: 0
+    _offset: {x: 0, y: 0}
+    _rotationOffset: {x: 0, y: 0, z: 0}
+    _baseScale: {x: 1, y: 1, z: 1}
+    _2dMode: 0
+    velocityHandleMode: 0
+    applyPositionX: 1
+    applyPositionY: 1
+    applyPositionZ: 1
+    applyPosition2D: 1
+    retainLocalPosition: 0
+    direction: 1
+    applyRotationX: 1
+    applyRotationY: 1
+    applyRotationZ: 1
+    applyRotation2D: 1
+    retainLocalRotation: 0
+    applyScaleX: 0
+    applyScaleY: 0
+    applyScaleZ: 0
+    targetUser: {fileID: 4077060961248915938}
+  targetRigidbody: {fileID: 0}
+  targetRigidbody2D: {fileID: 0}
+  targetTransform: {fileID: 5184518748646144763}
+  _result:
+    position: {x: 4.724903, y: -1.12414515e-17, z: 2.53135}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.04162248, y: -4.4370427e-18, z: 0.9991333}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
+    percent: 0.04500000178813934
+  _finalResult:
+    position: {x: 4.724903, y: -1.12414515e-17, z: 2.53135}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.04162248, y: -4.4370427e-18, z: 0.9991333}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
+    percent: 0.04500000178813934
+  wrapMode: 1
+  followMode: 0
+  autoStartPosition: 0
+  _follow: 1
+  _startPosition: 0.04500000178813934
+  preserveUniformSpeedWithOffset: 0
+  _followSpeed: 1
+  _followDuration: 1
+  _speedModifier:
+    blend: 1
+    useClippedPercent: 0
+    keys: []
+  _unityOnEndReached:
+    m_PersistentCalls:
+      m_Calls: []
+  _unityOnBeginningReached:
+    m_PersistentCalls:
+      m_Calls: []

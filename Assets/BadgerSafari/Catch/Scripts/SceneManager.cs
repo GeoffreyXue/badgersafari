@@ -42,9 +42,8 @@ public class SceneManager : MonoBehaviour
         stopwatch = new System.Diagnostics.Stopwatch();
         Invoke(nameof(StartCountdown), startDelay);
 
-        // spawn badger in random position
-        Vector3 randomPosition = new Vector3(Random.Range(-spawnXRange, spawnXRange), 0, Random.Range(-spawnZRange, spawnZRange));
-        Instantiate(badgerPrefab, randomPosition + badgerPrefab.transform.position, Quaternion.identity);
+        // spawn badger
+        Instantiate(badgerPrefab);
     }
 
     void StartCountdown()
