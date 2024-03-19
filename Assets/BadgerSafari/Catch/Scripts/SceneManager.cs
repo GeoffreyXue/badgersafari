@@ -11,11 +11,13 @@ public enum GameState
 
 public class SceneManager : MonoBehaviour
 {
-    // // Serialized fields
-    // [SerializeField]
-    // private TextMeshPro countdownText = new TextMeshPro();
-    // [SerializeField]
-    // // private TextMeshPro timerText = new();
+    // Serialized fields
+    [SerializeField]
+    private TextMeshProUGUI countdownText;
+    [SerializeField]
+    private TextMeshProUGUI timerText;
+    [SerializeField]
+    private TextMeshProUGUI completionText;
     [SerializeField]
     private GameObject badgerPrefab;
 
@@ -55,28 +57,28 @@ public class SceneManager : MonoBehaviour
         switch (currentState)
         {
             case GameState.Start:
-                if (stopwatch.Elapsed.Seconds >= countdownSeconds)
-                {
-                    ChangeGameState(GameState.Catching);
-                    stopwatch.Restart();
-                }
-                else
-                {
-                    // countdownText.text = (countdownSeconds - stopwatch.Elapsed.Seconds).ToString();
+                if (stopwatch.IsRunning) {
+                    if (stopwatch.Elapsed.Seconds >= countdownSeconds)
+                    {
+                        ChangeGameState(GameState.Catching);
+                    }
+                    else
+                    {
+                        countdownText.text = (countdownSeconds - stopwatch.Elapsed.Seconds).ToString();
+                    }
                 }
                 break;
             case GameState.Catching:
                 if (stopwatch.Elapsed.Seconds >= catchSeconds)
                 {
                     ChangeGameState(GameState.End);
-                    stopwatch.Stop();
                 }
                 else
                 {
-                    // timerText.text = (catchSeconds - stopwatch.Elapsed.Seconds).ToString();
+                    timerText.text = (catchSeconds - stopwatch.Elapsed.Seconds).ToString();
                 }
                 break;
-            case GameState.End:
+            default:
                 break;
         }
     }
@@ -89,19 +91,37 @@ public class SceneManager : MonoBehaviour
     public void ChangeGameState(GameState newState)
     {
         currentState = newState;
-
         GameStateChanged?.Invoke(currentState);
     }
 
     void OnGameStateChanged(GameState newState)
     {
         Debug.Log("Game state changed to: " + newState);
-        if (newState == GameState.End) {
-            if (isBadgerCaught) {
-                Debug.Log("You caught the badger!");
-            } else {
-                Debug.Log("You missed the badger!");
-            }
+        switch(newState)
+        {
+            case GameState.Start:
+                countdownText.gameObject.SetActive(true);
+                timerText.gameObject.SetActive(false);
+                completionText.gameObject.SetActive(false);
+                break;
+            case GameState.Catching:
+                stopwatch.Restart();
+                countdownText.gameObject.SetActive(false);
+                timerText.gameObject.SetActive(true);
+                completionText.gameObject.SetActive(false);
+                break;
+            case GameState.End:
+                stopwatch.Stop();
+                countdownText.gameObject.SetActive(false);
+                timerText.gameObject.SetActive(false);
+                completionText.gameObject.SetActive(true);
+
+                if (isBadgerCaught) {
+                    completionText.text = "You caught the badger!";
+                } else {
+                    completionText.text = "You missed the badger...";
+                }
+                break;
         }
     }
 }
