@@ -31,11 +31,16 @@ public class SceneManager : MonoBehaviour
     private readonly int startDelay = 1;
     private readonly int countdownSeconds = 3;
     private readonly int catchSeconds = 60;
+    private readonly int endSeconds = 3;
     private readonly float spawnXRange = 2;
     private readonly float spawnZRange = 2;
 
+    private TransitionManager transitionManager;
+
     void Start()
     {
+        transitionManager = FindObjectOfType<TransitionManager>();
+
         currentState = GameState.Start;
         GameStateChanged += OnGameStateChanged;
 
@@ -120,7 +125,14 @@ public class SceneManager : MonoBehaviour
                 } else {
                     completionText.text = "You missed the badger...";
                 }
+
+                // switch to anonyumous function home scene in 5 seconds
+                Invoke(nameof(GoToHomeScreen), endSeconds);
                 break;
         }
+    }
+
+    private void GoToHomeScreen() {
+        transitionManager.GoToScene(0);
     }
 }
