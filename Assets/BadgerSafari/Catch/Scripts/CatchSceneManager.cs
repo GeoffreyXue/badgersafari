@@ -60,7 +60,6 @@ public class CatchSceneManager : MonoBehaviour
 
         // initialize variables
         currentState = GameState.Start;
-        GameStateChanged.Invoke(currentState);
         if (MainManager.Instance != null)
         {
             int catchLocation = MainManager.Instance.catchLocation;
@@ -85,6 +84,8 @@ public class CatchSceneManager : MonoBehaviour
         splineFollower.followMode = SplineFollower.FollowMode.Uniform;
         splineFollower.wrapMode = SplineFollower.Wrap.Loop;
         splineFollower.followSpeed = 1;
+
+        GameStateChanged.Invoke(currentState);
     }
 
     void StartCountdown()
