@@ -9,6 +9,12 @@ public enum GameState
     End
 }
 
+/// <summary>
+/// A singleton that manages the catch scene.
+/// - Starts stopwatch to manage transitions between scenes
+/// - Controls UI elements based on game state
+/// - When badger is caught/timer runs out, ends the game and switches back to home
+/// </summary>
 public class SceneManager : MonoBehaviour
 {
     // Serialized fields
@@ -39,15 +45,22 @@ public class SceneManager : MonoBehaviour
 
     void Start()
     {
+        // initialize variables
         transitionManager = FindObjectOfType<TransitionManager>();
-
         currentState = GameState.Start;
         GameStateChanged += OnGameStateChanged;
+        if (MainManager.Instance != null)
+        {
+            int catchLocation = MainManager.Instance.catchLocation;
+            Debug.Log("Catch location: " + catchLocation);
+        }
 
+        // start stopwatch and countdown
         stopwatch = new System.Diagnostics.Stopwatch();
         Invoke(nameof(StartCountdown), startDelay);
 
-        // spawn badger
+        // spawn badger and configure catch location
+        // TODO: Catch location configuration
         Instantiate(badgerPrefab);
     }
 

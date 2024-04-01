@@ -2,6 +2,12 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Handles catch ball behavior.
+/// - Triggers haptics when the ball is thrown.
+/// - Destroys the ball after a certain number of collisions.
+/// - Ends the game when the ball collides with the badger.
+/// </summary>
 public class CatchBallBehavior : MonoBehaviour
 {
     private SceneManager sceneManager;
