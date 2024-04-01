@@ -51,7 +51,7 @@ public class SceneManager : MonoBehaviour
         GameStateChanged += OnGameStateChanged;
         if (MainManager.Instance != null)
         {
-            int catchLocation = MainManager.Instance.catchLocation;
+            int catchLocation = MainManager.Instance.CatchLocation;
             Debug.Log("Catch location: " + catchLocation);
         }
 
