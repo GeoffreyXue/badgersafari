@@ -10,18 +10,29 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// </summary>
 public class CatchBallBehavior : MonoBehaviour
 {
+    [SerializeField]
+    [Tooltip("Will be found if not set")]
     private CatchSceneManager sceneManager;
     private Rigidbody rb;
+    private XRGrabInteractable grabInteractable;
     private bool thrown;
-    private int thrownCollisionLifetime = 3;
+    private int thrownCollisionLifetime;
+
+    void Awake() {
+        CatchSceneManager.GameStateChanged += OnGameStateChanged;
+    }
 
     void Start() {
+        // find if not initialized
+        sceneManager = sceneManager == null ? FindObjectOfType<CatchSceneManager>() : sceneManager;
+
+        rb = GetComponent<Rigidbody>();
+        grabInteractable = GetComponent<XRGrabInteractable>();
+        thrown = false;
+        thrownCollisionLifetime = 3;
+
         XRBaseInteractable interactable = GetComponent<XRBaseInteractable>();
         interactable.selectExited.AddListener(TriggerHaptics);
-
-        sceneManager = GameObject.Find("SceneManager").GetComponent<CatchSceneManager>();
-        rb = GetComponent<Rigidbody>();
-        thrown = false;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -54,5 +65,18 @@ public class CatchBallBehavior : MonoBehaviour
         float hapticStrength = Mathf.Clamp(rb.velocity.magnitude / 6, 0.1f, 1.0f);
         float hapticDuration = Mathf.Clamp(rb.velocity.magnitude / 20, 0.1f, 0.3f);
         controller.SendHapticImpulse(hapticStrength, hapticDuration);
+    }
+
+    public void OnGameStateChanged(GameState newState) {
+        // prevent grabbing during start phase
+        // TODO: Currently doesn't work, catch balls detach
+        // switch (newState) {
+        //     case GameState.Start:
+        //         grabInteractable.interactionLayers = LayerMask.GetMask("Nothing");
+        //         break;
+        //     default:
+        //         grabInteractable.interactionLayers = LayerMask.GetMask("Default");
+        //         break;
+        // }
     }
 }

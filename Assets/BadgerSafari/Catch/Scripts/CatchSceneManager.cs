@@ -48,6 +48,10 @@ public class CatchSceneManager : MonoBehaviour
     private readonly float spawnXRange = 2;
     private readonly float spawnZRange = 2;
 
+    void Awake() {
+        GameStateChanged += OnGameStateChanged;
+    }
+
     void Start()
     {
         // find if not initialized
@@ -56,7 +60,7 @@ public class CatchSceneManager : MonoBehaviour
 
         // initialize variables
         currentState = GameState.Start;
-        GameStateChanged += OnGameStateChanged;
+        GameStateChanged.Invoke(currentState);
         if (MainManager.Instance != null)
         {
             int catchLocation = MainManager.Instance.catchLocation;
@@ -127,7 +131,7 @@ public class CatchSceneManager : MonoBehaviour
     public void ChangeGameState(GameState newState)
     {
         currentState = newState;
-        GameStateChanged?.Invoke(currentState);
+        GameStateChanged.Invoke(currentState);
     }
 
     void OnGameStateChanged(GameState newState)
