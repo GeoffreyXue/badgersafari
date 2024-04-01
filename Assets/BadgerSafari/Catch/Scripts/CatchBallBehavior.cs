@@ -10,7 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// </summary>
 public class CatchBallBehavior : MonoBehaviour
 {
-    private SceneManager sceneManager;
+    private CatchSceneManager sceneManager;
     private Rigidbody rb;
     private bool thrown;
     private int thrownCollisionLifetime = 3;
@@ -19,7 +19,7 @@ public class CatchBallBehavior : MonoBehaviour
         XRBaseInteractable interactable = GetComponent<XRBaseInteractable>();
         interactable.selectExited.AddListener(TriggerHaptics);
 
-        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        sceneManager = GameObject.Find("SceneManager").GetComponent<CatchSceneManager>();
         rb = GetComponent<Rigidbody>();
         thrown = false;
     }

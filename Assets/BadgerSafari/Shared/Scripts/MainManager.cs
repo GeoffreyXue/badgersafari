@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// A singleton class that manages persistent and session state across the game.
@@ -8,11 +9,18 @@ using UnityEngine;
 public class MainManager : MonoBehaviour
 {
     public static MainManager Instance;
+    // Badger to catch in the catch scene
+    [HideInInspector]
+    public BadgerData badgerToCatch;
     // Location to catch the badger in, determines the world
-    public int CatchLocation { get; set; }
+    [HideInInspector]
+    public int catchLocation;
 
-    // constant for the badger file path
-    public const string badgerFilePath = "/badgers.json";
+
+    private const string badgerFilePath = "/badgers.json";
+    private class SaveData {
+        public BadgerData[] badgers;
+    }
 
     private void Awake()
     {
@@ -33,14 +41,19 @@ public class MainManager : MonoBehaviour
         {
             try {
                 string json = File.ReadAllText(path);
-                return JsonUtility.FromJson<BadgerData[]>(json);
+                BadgerData[] badgers = JsonUtility.FromJson<SaveData>(json).badgers;
+                Assert.IsNotNull(badgers);
+                return badgers;
             }
             catch (Exception e) {
                 Debug.LogError("Error reading badger data: " + e.Message);
+                // delete file to ensure that we can start with a fresh file
+                File.Delete(path);
                 return new BadgerData[0];
             }
         }
         else {
+            Debug.Log("File doesn't exist.");
             return new BadgerData[0];
         }
     }
@@ -53,7 +66,7 @@ public class MainManager : MonoBehaviour
         
         try {
             string path = Application.persistentDataPath + badgerFilePath;
-            string json = JsonUtility.ToJson(badgers);
+            string json = JsonUtility.ToJson(new SaveData() { badgers = badgers });
             File.WriteAllText(path, json);
         }
         catch (Exception e) {
