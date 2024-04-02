@@ -1,3 +1,4 @@
+using Dreamteck.Splines;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,13 @@ public enum GameState
     End
 }
 
-public class SceneManager : MonoBehaviour
+/// <summary>
+/// A singleton that manages the catch scene.
+/// - Starts stopwatch to manage transitions between scenes
+/// - Controls UI elements based on game state
+/// - When badger is caught/timer runs out, ends the game and switches back to home
+/// </summary>
+public class CatchSceneManager : MonoBehaviour
 {
     // Serialized fields
     [SerializeField]
@@ -20,6 +27,12 @@ public class SceneManager : MonoBehaviour
     private TextMeshProUGUI completionText;
     [SerializeField]
     private GameObject badgerPrefab;
+    [SerializeField]
+    [Tooltip("Will be found if not set")]
+    private SplineComputer splineComputer;
+    [SerializeField]
+    [Tooltip("Will be found if not set")]
+    private TransitionManager transitionManager;
 
     // Game state
     internal bool isBadgerCaught = false;
@@ -35,20 +48,44 @@ public class SceneManager : MonoBehaviour
     private readonly float spawnXRange = 2;
     private readonly float spawnZRange = 2;
 
-    private TransitionManager transitionManager;
+    void Awake() {
+        GameStateChanged += OnGameStateChanged;
+    }
 
     void Start()
     {
-        transitionManager = FindObjectOfType<TransitionManager>();
+        // find if not initialized
+        splineComputer = splineComputer == null ? FindObjectOfType<SplineComputer>() : splineComputer;
+        transitionManager = transitionManager == null ? FindObjectOfType<TransitionManager>() : transitionManager;
 
+        // initialize variables
         currentState = GameState.Start;
-        GameStateChanged += OnGameStateChanged;
+        if (MainManager.Instance != null)
+        {
+            int catchLocation = MainManager.Instance.catchLocation;
+            Debug.Log("Catch location: " + catchLocation);
+        }
 
+        // start stopwatch and countdown
         stopwatch = new System.Diagnostics.Stopwatch();
         Invoke(nameof(StartCountdown), startDelay);
 
-        // spawn badger
-        Instantiate(badgerPrefab);
+        // spawn badger and configure catch location
+        // TODO: Catch location configuration
+        Vector3 spawnPosition = GetNonOverlappingSpawnPosition();
+
+        GameObject badger = Instantiate(badgerPrefab, spawnPosition, badgerPrefab.transform.rotation);
+
+        splineComputer.transform.position = spawnPosition;
+
+        SplineFollower splineFollower = badger.AddComponent<SplineFollower>();
+        splineFollower.spline = splineComputer;
+        splineFollower.follow = true;
+        splineFollower.followMode = SplineFollower.FollowMode.Uniform;
+        splineFollower.wrapMode = SplineFollower.Wrap.Loop;
+        splineFollower.followSpeed = 1;
+
+        GameStateChanged.Invoke(currentState);
     }
 
     void StartCountdown()
@@ -95,7 +132,7 @@ public class SceneManager : MonoBehaviour
     public void ChangeGameState(GameState newState)
     {
         currentState = newState;
-        GameStateChanged?.Invoke(currentState);
+        GameStateChanged.Invoke(currentState);
     }
 
     void OnGameStateChanged(GameState newState)
@@ -122,11 +159,12 @@ public class SceneManager : MonoBehaviour
 
                 if (isBadgerCaught) {
                     completionText.text = "You caught the badger!";
+                    Debug.Log(MainManager.Instance);
+                    MainManager.Instance.AddBadger(MainManager.Instance.badgerToCatch);
                 } else {
                     completionText.text = "You missed the badger...";
                 }
 
-                // switch to anonyumous function home scene in 5 seconds
                 Invoke(nameof(GoToHomeScreen), endSeconds);
                 break;
         }
@@ -134,5 +172,14 @@ public class SceneManager : MonoBehaviour
 
     private void GoToHomeScreen() {
         transitionManager.GoToScene(0);
+    }
+
+    private Vector3 GetNonOverlappingSpawnPosition()
+    {
+        Vector3 randomPosition = new(Random.Range(-spawnXRange, spawnXRange), 0f, Random.Range(-spawnZRange, spawnZRange));
+
+        // TODO: Ensure that badger isn't spawned on world obstacles
+
+        return randomPosition;
     }
 }

@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Fades the screen in and out.
+/// </summary>
 public class FadeScreen : MonoBehaviour
 {
     public bool fadeOnStart = true;
