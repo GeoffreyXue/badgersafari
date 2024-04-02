@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Animates the hand based on input.
+/// From video: https://www.youtube.com/watch?v=pI8l42F6ZVc
+/// </summary>
 public class HandAnimatorController : MonoBehaviour
 {
     [SerializeField]

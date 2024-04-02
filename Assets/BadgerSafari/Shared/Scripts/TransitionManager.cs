@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages transitions between scenes using a fade screen.
+/// </summary>
 public class TransitionManager : MonoBehaviour
 {
     public FadeScreen fadeScreen;
