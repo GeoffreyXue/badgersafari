@@ -32,6 +32,12 @@ public class CatchSceneManager : MonoBehaviour
     [SerializeField]
     private AudioClip audioBadgerCall;
     [SerializeField]
+    private AudioSource backgroundAudioSource;
+    [SerializeField]
+    private AudioClip audioCaught;
+    [SerializeField]
+    private AudioClip audioMissed;
+    [SerializeField]
     [Tooltip("Will be found if not set")]
     private SplineComputer splineComputer;
     [SerializeField]
@@ -47,7 +53,7 @@ public class CatchSceneManager : MonoBehaviour
     private System.Diagnostics.Stopwatch stopwatch;
     private readonly int startDelay = 1;
     private readonly int countdownSeconds = 3;
-    private readonly int catchSeconds = 20;
+    private readonly int catchSeconds = 30;
     private readonly int endSeconds = 3;
     private readonly float spawnXRange = 2;
     private readonly float spawnZRange = 2;
@@ -168,12 +174,16 @@ public class CatchSceneManager : MonoBehaviour
                 timerText.gameObject.SetActive(false);
                 completionText.gameObject.SetActive(true);
 
+                backgroundAudioSource.Stop();
+
                 if (isBadgerCaught) {
                     completionText.text = "You caught the badger!";
+                    backgroundAudioSource.PlayOneShot(audioCaught);
                     Debug.Log(MainManager.Instance);
                     MainManager.Instance.AddBadger(MainManager.Instance.badgerToCatch);
                 } else {
                     completionText.text = "You missed the badger...";
+                    backgroundAudioSource.PlayOneShot(audioMissed);
                 }
 
                 Invoke(nameof(GoToHomeScreen), endSeconds);

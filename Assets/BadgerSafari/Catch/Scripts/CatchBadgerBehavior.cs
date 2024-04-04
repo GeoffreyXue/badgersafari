@@ -9,11 +9,14 @@ public class CatchBadgerBehavior : MonoBehaviour {
     public AudioClip audioChurr;
     public AudioClip audioCall;
     private AudioSource audioSource;
+    private ParticleSystem badgerDirtParticles;
     private float minAudioTime = 4.0f;
     private float maxAudioTime = 10.0f;
 
     void Start() {
         audioSource = GetComponent<AudioSource>();
+        badgerDirtParticles = GetComponentInChildren<ParticleSystem>();
+        badgerDirtParticles.Play();
         StartCoroutine(PlayAudio());
     }
 
