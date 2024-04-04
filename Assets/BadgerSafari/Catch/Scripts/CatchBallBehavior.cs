@@ -50,12 +50,6 @@ public class CatchBallBehavior : MonoBehaviour
             sceneManager.ChangeGameState(GameState.End);
         }
 
-        Debug.Log(collision.gameObject);
-        Debug.Log(collision.gameObject.name);
-        Debug.Log(collision.gameObject.layer);
-        Debug.Log(LayerMask.NameToLayer("World Obstacles"));
-
-
         if (collision.gameObject.layer == LayerMask.NameToLayer("World Obstacles") || collision.gameObject.CompareTag("Badger"))
         {
             if (audioSource.isPlaying && audioSource.clip == audioBounce)
