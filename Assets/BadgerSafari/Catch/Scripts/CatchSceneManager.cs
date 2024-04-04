@@ -47,13 +47,17 @@ public class CatchSceneManager : MonoBehaviour
     private System.Diagnostics.Stopwatch stopwatch;
     private readonly int startDelay = 1;
     private readonly int countdownSeconds = 3;
-    private readonly int catchSeconds = 60;
+    private readonly int catchSeconds = 20;
     private readonly int endSeconds = 3;
     private readonly float spawnXRange = 2;
     private readonly float spawnZRange = 2;
 
     void Awake() {
         GameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable() {
+        GameStateChanged -= OnGameStateChanged;
     }
 
     void Start()
@@ -90,7 +94,7 @@ public class CatchSceneManager : MonoBehaviour
         splineFollower.follow = true;
         splineFollower.followMode = SplineFollower.FollowMode.Uniform;
         splineFollower.wrapMode = SplineFollower.Wrap.Loop;
-        splineFollower.followSpeed = 1;
+        splineFollower.followSpeed = 2;
 
         GameStateChanged.Invoke(currentState);
     }
