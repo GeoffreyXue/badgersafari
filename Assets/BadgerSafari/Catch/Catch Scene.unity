@@ -2031,6 +2031,8 @@ MonoBehaviour:
   timerText: {fileID: 1710318315}
   completionText: {fileID: 1327323508}
   badgerPrefab: {fileID: 3966465260445436105, guid: 9342352217172d8439a52066fc02d9d5, type: 3}
+  audioBadgerChurr: {fileID: 8300000, guid: 5ac8109b005bbd7438ae1e43381fbf94, type: 3}
+  audioBadgerCall: {fileID: 8300000, guid: 0494f8b354d92a8449d17b9e880918d3, type: 3}
   splineComputer: {fileID: 5360903680043296346}
   transitionManager: {fileID: 3766000021075124753}
 --- !u!1 &1479984481

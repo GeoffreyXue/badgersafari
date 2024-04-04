@@ -28,6 +28,10 @@ public class CatchSceneManager : MonoBehaviour
     [SerializeField]
     private GameObject badgerPrefab;
     [SerializeField]
+    private AudioClip audioBadgerChurr;
+    [SerializeField]
+    private AudioClip audioBadgerCall;
+    [SerializeField]
     [Tooltip("Will be found if not set")]
     private SplineComputer splineComputer;
     [SerializeField]
@@ -75,6 +79,9 @@ public class CatchSceneManager : MonoBehaviour
         Vector3 spawnPosition = GetNonOverlappingSpawnPosition();
 
         GameObject badger = Instantiate(badgerPrefab, spawnPosition, badgerPrefab.transform.rotation);
+        CatchBadgerBehavior badgerBehavior = badger.AddComponent<CatchBadgerBehavior>();
+        badgerBehavior.audioChurr = audioBadgerChurr;
+        badgerBehavior.audioCall = audioBadgerCall;
 
         splineComputer.transform.position = spawnPosition;
 
