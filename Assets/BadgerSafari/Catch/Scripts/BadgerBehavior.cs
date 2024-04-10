@@ -6,18 +6,21 @@ public class BadgerBehavior : MonoBehaviour
 {
     Animator animator; 
 
-    // Game state
-    internal bool isBadgerCaught = false;
+    [SerializeField]
+    [Tooltip("Will be found if not set")]
+    private CatchSceneManager sceneManager;
 
     void Start()
     {
+        sceneManager = sceneManager == null ? FindObjectOfType<CatchSceneManager>() : sceneManager;
         animator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isBadgerCaught){
+        if(sceneManager.isBadgerCaught){
+            Debug.Log("Should go to catch animation");
             animator.SetBool("Caught", true);
         }
     }

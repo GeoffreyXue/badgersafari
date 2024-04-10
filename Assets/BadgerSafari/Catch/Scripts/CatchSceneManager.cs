@@ -28,6 +28,8 @@ public class CatchSceneManager : MonoBehaviour
     [SerializeField]
     private GameObject badgerPrefab;
     [SerializeField]
+    private GameObject badgerToCatch;
+    [SerializeField]
     private AudioClip audioBadgerChurr;
     [SerializeField]
     private AudioClip audioBadgerCall;

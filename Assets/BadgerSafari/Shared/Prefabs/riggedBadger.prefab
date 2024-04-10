@@ -186,6 +186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: riggedBadger
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: de868fb8bdcc959499c17fa6195fde87, type: 3}
+      propertyPath: m_TagString
+      value: Badger
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -393,6 +397,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9124235743805435535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc613213860f05941b7dfbe8e039f5e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 691e7e0455334d845bd9b017a95826e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
