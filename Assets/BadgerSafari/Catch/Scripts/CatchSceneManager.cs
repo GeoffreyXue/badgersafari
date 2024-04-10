@@ -52,6 +52,7 @@ public class CatchSceneManager : MonoBehaviour
     public static event OnGameStateChange GameStateChanged;
     private GameState currentState;
 
+    private SplineFollower splineFollower;
     private System.Diagnostics.Stopwatch stopwatch;
     private readonly int startDelay = 1;
     private readonly int countdownSeconds = 3;
@@ -97,7 +98,8 @@ public class CatchSceneManager : MonoBehaviour
 
         splineComputer.transform.position = spawnPosition;
 
-        SplineFollower splineFollower = badger.AddComponent<SplineFollower>();
+        // SplineFollower splineFollower = badger.AddComponent<SplineFollower>();
+        splineFollower = badger.AddComponent<SplineFollower>();
         splineFollower.spline = splineComputer;
         splineFollower.follow = true;
         splineFollower.followMode = SplineFollower.FollowMode.Uniform;
@@ -179,6 +181,7 @@ public class CatchSceneManager : MonoBehaviour
                 backgroundAudioSource.Stop();
 
                 if (isBadgerCaught) {
+                    splineFollower.followSpeed = 0;
                     completionText.text = "You caught the badger!";
                     backgroundAudioSource.PlayOneShot(audioCaught);
                     Debug.Log(MainManager.Instance);
