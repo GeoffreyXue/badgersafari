@@ -11,6 +11,9 @@ public class HomeSceneManager : MonoBehaviour
     [SerializeField]
     private GameObject badgerPrefab;
     [SerializeField]
+    private GameObject infoPanelPrefab;
+    
+    [SerializeField]
     [Tooltip("Will be found if not set")]
     private TransitionManager transitionManager;
 
@@ -24,6 +27,10 @@ public class HomeSceneManager : MonoBehaviour
         if (!badgerPrefab)
         {
             Debug.LogError("Badger prefab not set in HomeSceneManager.");
+        }
+
+        if (!infoPanelPrefab) {
+            Debug.LogError("Info panel prefab not set in HomeBadgerBehavior.");
         }
 
         if (!transitionManager)
@@ -44,7 +51,7 @@ public class HomeSceneManager : MonoBehaviour
                 GameObject newBadger = Instantiate(badgerPrefab, spawnPosition, Quaternion.identity);
 
                 HomeBadgerBehavior badgerBehavior = newBadger.AddComponent<HomeBadgerBehavior>();
-                badgerBehavior.badgerData = badgerData;
+                badgerBehavior.Init(badgerData, infoPanelPrefab);
             }
         }
     }
