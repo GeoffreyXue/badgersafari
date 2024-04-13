@@ -9,45 +9,64 @@ using UnityEngine.AI;
 public class HomeBadgerBehavior : MonoBehaviour
 {
     public BadgerData badgerData;
-    public float waitTimeAverage = 4f;
-    public float waitTimeRange = 1f;
+    public float waitTimeAverage = 5f;
+    public float waitTimeRange = 2f;
     public float range = 3f ; //radius of sphere
 
     public Transform centrePoint; //centre of the area the agent wants to move around in
     //instead of centrePoint you can set it as the transform of the agent if you don't care about a specific area
 
+    private Animator animator;
     private NavMeshAgent agent;
-    private System.Diagnostics.Stopwatch stopwatch;
+    private System.Diagnostics.Stopwatch stopwatchWait = new();
+    private System.Diagnostics.Stopwatch stopwatchMax = new();
     private float waitTime;
+
     void Start()
     {
+        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        stopwatch = new System.Diagnostics.Stopwatch();
 
+        animator.SetBool("Caught", false);
+        animator.SetBool("Walk", false);
+
+        waitTime = 0;
         centrePoint = agent.transform;
     }
 
-    
     void Update()
     {
-        if(agent.remainingDistance <= agent.stoppingDistance) //done with path
+        // once finished waiting, navigate to a new random point
+        if (stopwatchWait.Elapsed.TotalSeconds >= waitTime)
         {
-            if (!stopwatch.IsRunning == false)
-            {
-                waitTime = Random.Range(waitTimeAverage - (waitTimeRange / 2), waitTimeAverage + (waitTimeRange / 2));
-                stopwatch.Start();
-            }
-            
-            if (stopwatch.Elapsed.TotalSeconds >= waitTime)
-            {
-                stopwatch.Reset();
-                Vector3 point;
-                if (RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
-                {
-                    Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
-                    agent.SetDestination(point);
-                }
-            }
+            stopwatchWait.Stop();
+            stopwatchWait.Reset();
+
+            stopwatchMax.Start();
+            animator.SetBool("Walk", true);
+
+            NavigateToRandomPoint();
+            Debug.DrawRay(agent.transform.position, agent.destination - agent.transform.position, Color.red, 1f);
+        }
+
+        // if close enough or done with path, pause for a certain amount of time
+        if (agent.remainingDistance <= (agent.stoppingDistance + (stopwatchMax.Elapsed.TotalSeconds / 100)) && stopwatchWait.IsRunning == false)
+        {
+            stopwatchMax.Stop();
+            stopwatchMax.Reset();
+            animator.SetBool("Walk", false);
+
+            waitTime = Random.Range(waitTimeAverage - (waitTimeRange / 2), waitTimeAverage + (waitTimeRange / 2));
+            stopwatchWait.Start();
+        }
+    }
+
+    void NavigateToRandomPoint()
+    {
+        Vector3 randomPoint;
+        if (RandomPoint(centrePoint.position, range, out randomPoint))
+        {
+            agent.SetDestination(randomPoint);
         }
     }
 

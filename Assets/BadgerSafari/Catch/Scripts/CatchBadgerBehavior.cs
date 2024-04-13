@@ -9,16 +9,24 @@ public class CatchBadgerBehavior : MonoBehaviour {
     public AudioClip audioChurr;
     public AudioClip audioCall;
     private AudioSource audioSource;
+    private Animator animator; 
     private ParticleSystem badgerDirtParticles;
-    private float minAudioTime = 4.0f;
-    private float maxAudioTime = 10.0f;
+    private readonly float minAudioTime = 4.0f;
+    private readonly float maxAudioTime = 10.0f;
 
-    void Start() {
+    void Awake() {
         audioSource = GetComponent<AudioSource>();
         badgerDirtParticles = GetComponentInChildren<ParticleSystem>();
+        animator = GetComponent<Animator>();
+
+        CatchSceneManager.GameStateChanged += OnGameStateChanged;
+    }
+
+    void Start() {
         badgerDirtParticles.Play();
         StartCoroutine(PlayAudio());
     }
+    
 
     private IEnumerator PlayAudio() {
         while (true) {
@@ -30,6 +38,22 @@ public class CatchBadgerBehavior : MonoBehaviour {
             } else {
                 audioSource.PlayOneShot(audioCall);
             }
+        }
+    }
+
+    private void OnGameStateChanged(GameState newState) {
+        switch (newState) {
+            case GameState.Start:
+                animator.SetBool("Walk", false);
+                animator.SetBool("Caught", false);
+                break;
+            case GameState.Catching:
+                animator.SetBool("Walk", true);
+                break;
+            case GameState.End:
+                animator.SetBool("Caught", true);
+                StopAllCoroutines();
+                break;
         }
     }
 }
