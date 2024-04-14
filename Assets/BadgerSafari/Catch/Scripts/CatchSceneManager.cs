@@ -28,6 +28,18 @@ public class CatchSceneManager : MonoBehaviour
     [SerializeField]
     private GameObject badgerPrefab;
     [SerializeField]
+    private GameObject badgerToCatch;
+    [SerializeField]
+    private AudioClip audioBadgerChurr;
+    [SerializeField]
+    private AudioClip audioBadgerCall;
+    [SerializeField]
+    private AudioSource backgroundAudioSource;
+    [SerializeField]
+    private AudioClip audioCaught;
+    [SerializeField]
+    private AudioClip audioMissed;
+    [SerializeField]
     [Tooltip("Will be found if not set")]
     private SplineComputer splineComputer;
     [SerializeField]
@@ -40,16 +52,21 @@ public class CatchSceneManager : MonoBehaviour
     public static event OnGameStateChange GameStateChanged;
     private GameState currentState;
 
+    private SplineFollower splineFollower;
     private System.Diagnostics.Stopwatch stopwatch;
     private readonly int startDelay = 1;
     private readonly int countdownSeconds = 3;
-    private readonly int catchSeconds = 60;
+    private readonly int catchSeconds = 30;
     private readonly int endSeconds = 3;
     private readonly float spawnXRange = 2;
     private readonly float spawnZRange = 2;
 
     void Awake() {
         GameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable() {
+        GameStateChanged -= OnGameStateChanged;
     }
 
     void Start()
@@ -75,15 +92,19 @@ public class CatchSceneManager : MonoBehaviour
         Vector3 spawnPosition = GetNonOverlappingSpawnPosition();
 
         GameObject badger = Instantiate(badgerPrefab, spawnPosition, badgerPrefab.transform.rotation);
+        CatchBadgerBehavior badgerBehavior = badger.AddComponent<CatchBadgerBehavior>();
+        badgerBehavior.audioChurr = audioBadgerChurr;
+        badgerBehavior.audioCall = audioBadgerCall;
 
         splineComputer.transform.position = spawnPosition;
 
-        SplineFollower splineFollower = badger.AddComponent<SplineFollower>();
+        // SplineFollower splineFollower = badger.AddComponent<SplineFollower>();
+        splineFollower = badger.AddComponent<SplineFollower>();
         splineFollower.spline = splineComputer;
         splineFollower.follow = true;
         splineFollower.followMode = SplineFollower.FollowMode.Uniform;
         splineFollower.wrapMode = SplineFollower.Wrap.Loop;
-        splineFollower.followSpeed = 1;
+        splineFollower.followSpeed = 2;
 
         GameStateChanged.Invoke(currentState);
     }
@@ -157,12 +178,17 @@ public class CatchSceneManager : MonoBehaviour
                 timerText.gameObject.SetActive(false);
                 completionText.gameObject.SetActive(true);
 
+                backgroundAudioSource.Stop();
+
                 if (isBadgerCaught) {
+                    splineFollower.followSpeed = 0;
                     completionText.text = "You caught the badger!";
+                    backgroundAudioSource.PlayOneShot(audioCaught);
                     Debug.Log(MainManager.Instance);
                     MainManager.Instance.AddBadger(MainManager.Instance.badgerToCatch);
                 } else {
                     completionText.text = "You missed the badger...";
+                    backgroundAudioSource.PlayOneShot(audioMissed);
                 }
 
                 Invoke(nameof(GoToHomeScreen), endSeconds);
