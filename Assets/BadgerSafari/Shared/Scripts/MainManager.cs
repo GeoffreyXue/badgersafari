@@ -37,6 +37,7 @@ public class MainManager : MonoBehaviour
     public BadgerData[] LoadBadgers()
     {
         string path = Application.persistentDataPath + badgerFilePath;
+        Debug.Log(path);
         if (File.Exists(path))
         {
             try {
@@ -60,6 +61,7 @@ public class MainManager : MonoBehaviour
 
     public void AddBadger(BadgerData newBadger)
     {
+        Debug.Log(newBadger);
         BadgerData[] badgers = LoadBadgers();
         Array.Resize(ref badgers, badgers.Length + 1);
         badgers[badgers.Length - 1] = newBadger;
@@ -67,6 +69,7 @@ public class MainManager : MonoBehaviour
         try {
             string path = Application.persistentDataPath + badgerFilePath;
             string json = JsonUtility.ToJson(new SaveData() { badgers = badgers });
+            Debug.Log(json);
             File.WriteAllText(path, json);
         }
         catch (Exception e) {

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public enum BadgerType
 {
@@ -13,6 +14,14 @@ public enum BadgerType
 public class BadgerData
 {
     public string name;
-    public DateTime dateCaught;
+    [SerializeField] long _timecode;
+    public DateTimeOffset dateCaught {
+        get {
+            return DateTimeOffset.FromUnixTimeMilliseconds(_timecode);
+        }
+        set {
+            _timecode = value.ToUnixTimeMilliseconds();
+        }
+    }
     public BadgerType type;
 }
