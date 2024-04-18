@@ -44,7 +44,7 @@ public class HomeSceneManager : MonoBehaviour
         {
             BadgerData[] badgers = MainManager.Instance.LoadBadgers();
             Debug.Log($"Loaded {badgers.Length} badgers.");
-            Debug.Log(badgers);
+            Debug.Log(badgers[0].dateCaught);
             badgerLength = badgers.Length;
 
             foreach (BadgerData badgerData in badgers)
