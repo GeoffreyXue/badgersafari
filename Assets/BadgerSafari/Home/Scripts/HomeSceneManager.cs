@@ -9,7 +9,9 @@ using UnityEngine;
 public class HomeSceneManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject badgerPrefab;
+    private GameObject normalBadgerPrefab;
+    [SerializeField]
+    private GameObject waterBadgerPrefab;
     [SerializeField]
     private GameObject infoPanelPrefab;
     
@@ -24,9 +26,9 @@ public class HomeSceneManager : MonoBehaviour
 
     void Start()
     {
-        if (!badgerPrefab)
+        if (!normalBadgerPrefab || !waterBadgerPrefab)
         {
-            Debug.LogError("Badger prefab not set in HomeSceneManager.");
+            Debug.LogError("Badger prefabs not set in HomeSceneManager.");
         }
 
         if (!infoPanelPrefab) {
@@ -48,7 +50,11 @@ public class HomeSceneManager : MonoBehaviour
             foreach (BadgerData badgerData in badgers)
             {
                 Vector3 spawnPosition = GetNonOverlappingSpawnPosition();
-                GameObject newBadger = Instantiate(badgerPrefab, spawnPosition, Quaternion.identity);
+                GameObject newBadger = Instantiate(
+                    badgerData.type == BadgerType.Normal ? normalBadgerPrefab : waterBadgerPrefab, 
+                    spawnPosition, 
+                    Quaternion.identity
+                );
 
                 HomeBadgerBehavior badgerBehavior = newBadger.AddComponent<HomeBadgerBehavior>();
                 badgerBehavior.Init(badgerData, infoPanelPrefab);
@@ -58,14 +64,17 @@ public class HomeSceneManager : MonoBehaviour
 
     public void OnCatchButtonClicked()
     {
-        // congfigure catch location and badger to catch
-        MainManager.Instance.catchLocation = 0;
+        // configure catch location and badger to catch
+        BadgerType type = BadgerType.Water; // Random.Range(0, 2) == 0 ? BadgerType.Normal : BadgerType.Water;
+
         BadgerData badger = new() {
             name = $"Badger the {badgerLength + 1}",
+            dateCaught = System.DateTime.Now,
+            type = type
         };
         MainManager.Instance.badgerToCatch = badger;
-
-        transitionManager.GoToScene(1);
+        MainManager.Instance.catchLocation = type == BadgerType.Normal ? 1 : 2;
+        transitionManager.GoToScene(MainManager.Instance.catchLocation);
     }
 
     private Vector3 GetNonOverlappingSpawnPosition()

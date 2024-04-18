@@ -35,8 +35,8 @@ public class HomeBadgerBehavior : MonoBehaviour {
         infoPanel.SetActive(false);
         TextMeshProUGUI[] texts = infoPanel.GetComponentsInChildren<TextMeshProUGUI>();
         texts[0].text = badgerData.name;
-        // set date caught to today
-        texts[1].text = $"Caught: {System.DateTime.Now: MM/dd/yyyy}";
+        // if date caught, set date caught
+        texts[1].text = $"Caught: {(badgerData.dateCaught != null ? badgerData.dateCaught.ToString("MM/dd/yyyy") : "unknown")}";
         
         // Set up awake on hover
         interactable = gameObject.GetOrAddComponent<XRSimpleInteractable>();

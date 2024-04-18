@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1830657, g: 0.22874258, b: 0.3066915, a: 1}
+  m_IndirectSpecularColor: {r: 0.18306622, g: 0.2287434, b: 0.30669293, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1500,7 +1500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b61571f834af3488e9c379576b7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  badgerPrefab: {fileID: 294898510322772264, guid: a1391bdd85a850d4aaa1a75eaa6289df, type: 3}
+  normalBadgerPrefab: {fileID: 9124235743805435535, guid: 0a3b44b3f161e9049aee98dcd8cd6c19, type: 3}
+  waterBadgerPrefab: {fileID: 357655158175118606, guid: b49ef8a3ee165404f80ba7317d835388, type: 3}
   infoPanelPrefab: {fileID: 4975008703920860089, guid: e958f33961a6cd1479cf65e4e70d47af, type: 3}
   transitionManager: {fileID: 792402346}
 --- !u!4 &131147666
@@ -3318,6 +3319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   badgerToCatch:
     name: 
+    type: 0
   catchLocation: 0
 --- !u!4 &1535068783
 Transform:
