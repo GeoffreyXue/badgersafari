@@ -65,7 +65,8 @@ public class HomeSceneManager : MonoBehaviour
     public void OnCatchButtonClicked()
     {
         // configure catch location and badger to catch
-        BadgerType type = BadgerType.Water; // Random.Range(0, 2) == 0 ? BadgerType.Normal : BadgerType.Water;
+        Random.InitState(System.DateTime.Now.Millisecond);
+        BadgerType type = Random.Range(0, 2) == 0 ? BadgerType.Normal : BadgerType.Water;
 
         BadgerData badger = new() {
             name = $"Badger the {badgerLength + 1}",
