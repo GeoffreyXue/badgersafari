@@ -3721,11 +3721,11 @@ PrefabInstance:
       objectReference: {fileID: 3875942005376645962, guid: 946ffaff7541f0c438970675c8e3bc54, type: 3}
     - target: {fileID: 1266579150751646945, guid: 3bcd037e8cb081945bb93c6dbb2909ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.022
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1266579150751646945, guid: 3bcd037e8cb081945bb93c6dbb2909ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1266579150751646945, guid: 3bcd037e8cb081945bb93c6dbb2909ef, type: 3}
       propertyPath: m_LocalPosition.z
