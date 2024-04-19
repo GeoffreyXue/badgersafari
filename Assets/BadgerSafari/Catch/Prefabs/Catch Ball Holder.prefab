@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4319051115291122468}
   - component: {fileID: 3056448177603098124}
   - component: {fileID: 5005077088614702889}
+  - component: {fileID: -7291110454542266029}
   m_Layer: 0
   m_Name: Catch Ball Holder
   m_TagString: Untagged
@@ -111,6 +112,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7291110454542266029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849096683706822231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a68a121c71a394b8deb9ef945687ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catchBallPrefab: {fileID: 8475174555326366423, guid: 403f685ff28fcd04689cfafef38b42e0, type: 3}
 --- !u!1 &1953816001410560183
 GameObject:
   m_ObjectHideFlags: 0
