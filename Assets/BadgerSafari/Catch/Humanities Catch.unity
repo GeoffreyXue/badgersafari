@@ -1872,8 +1872,8 @@ MonoBehaviour:
   timerText: {fileID: 1710318315}
   completionText: {fileID: 1327323508}
   badgerPrefab: {fileID: 9124235743805435535, guid: 0a3b44b3f161e9049aee98dcd8cd6c19, type: 3}
-  audioBadgerChurr: {fileID: 8300000, guid: 5ac8109b005bbd7438ae1e43381fbf94, type: 3}
-  audioBadgerCall: {fileID: 8300000, guid: 0494f8b354d92a8449d17b9e880918d3, type: 3}
+  audioBadgerNoise1: {fileID: 8300000, guid: 0494f8b354d92a8449d17b9e880918d3, type: 3}
+  audioBadgerNoise2: {fileID: 8300000, guid: 5ac8109b005bbd7438ae1e43381fbf94, type: 3}
   backgroundAudioSource: {fileID: 1925448511}
   audioCaught: {fileID: 8300000, guid: a740f6ec3518fab43ba67df59f66053f, type: 3}
   audioMissed: {fileID: 8300000, guid: 5757a579d3dc993448d80089e7791239, type: 3}

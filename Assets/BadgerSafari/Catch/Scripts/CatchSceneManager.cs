@@ -28,9 +28,9 @@ public class CatchSceneManager : MonoBehaviour
     [SerializeField]
     private GameObject badgerPrefab;
     [SerializeField]
-    private AudioClip audioBadgerChurr;
+    private AudioClip audioBadgerNoise1;
     [SerializeField]
-    private AudioClip audioBadgerCall;
+    private AudioClip audioBadgerNoise2;
     [SerializeField]
     private AudioSource backgroundAudioSource;
     [SerializeField]
@@ -96,8 +96,8 @@ public class CatchSceneManager : MonoBehaviour
         badger.transform.localScale = new Vector3(size, size, size);
 
         CatchBadgerBehavior badgerBehavior = badger.AddComponent<CatchBadgerBehavior>();
-        badgerBehavior.audioChurr = audioBadgerChurr;
-        badgerBehavior.audioCall = audioBadgerCall;
+        badgerBehavior.audioChurr = audioBadgerNoise1;
+        badgerBehavior.audioCall = audioBadgerNoise2;
 
         splineComputer.transform.position = spawnPosition;
 
