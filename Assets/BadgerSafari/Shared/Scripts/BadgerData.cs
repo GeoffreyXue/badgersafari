@@ -4,7 +4,8 @@ using UnityEngine;
 public enum BadgerType
 {
     Normal,
-    Water
+    Water,
+    Fire
 }
 
 /// <summary>
@@ -14,6 +15,7 @@ public enum BadgerType
 public class BadgerData
 {
     public string name;
+    public string favoriteFood;
     [SerializeField] long _timecode;
     public DateTimeOffset dateCaught {
         get {
@@ -23,5 +25,6 @@ public class BadgerData
             _timecode = value.ToUnixTimeMilliseconds();
         }
     }
+    public float size;
     public BadgerType type;
 }

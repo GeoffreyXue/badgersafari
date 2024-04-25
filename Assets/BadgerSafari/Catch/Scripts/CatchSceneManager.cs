@@ -91,6 +91,10 @@ public class CatchSceneManager : MonoBehaviour
         Vector3 spawnPosition = GetNonOverlappingSpawnPosition();
 
         GameObject badger = Instantiate(badgerPrefab, spawnPosition, badgerPrefab.transform.rotation);
+        // scale based on badger size
+        float size = MainManager.Instance.badgerToCatch.size;
+        badger.transform.localScale = new Vector3(size, size, size);
+
         CatchBadgerBehavior badgerBehavior = badger.AddComponent<CatchBadgerBehavior>();
         badgerBehavior.audioChurr = audioBadgerChurr;
         badgerBehavior.audioCall = audioBadgerCall;

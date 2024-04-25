@@ -1500,8 +1500,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b61571f834af3488e9c379576b7895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalBadgerPrefab: {fileID: 9124235743805435535, guid: 0a3b44b3f161e9049aee98dcd8cd6c19, type: 3}
-  waterBadgerPrefab: {fileID: 357655158175118606, guid: b49ef8a3ee165404f80ba7317d835388, type: 3}
+  badgerPrefabs:
+  - {fileID: 9124235743805435535, guid: 0a3b44b3f161e9049aee98dcd8cd6c19, type: 3}
+  - {fileID: 357655158175118606, guid: b49ef8a3ee165404f80ba7317d835388, type: 3}
+  - {fileID: 9124235743805435535, guid: 0a3b44b3f161e9049aee98dcd8cd6c19, type: 3}
   infoPanelPrefab: {fileID: 4975008703920860089, guid: e958f33961a6cd1479cf65e4e70d47af, type: 3}
   transitionManager: {fileID: 792402346}
 --- !u!4 &131147666
@@ -2974,7 +2976,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   badgerToCatch:
     name: 
+    favoriteFood: 
     _timecode: 0
+    size: 0
     type: 0
   catchLocation: 0
 --- !u!4 &1535068783

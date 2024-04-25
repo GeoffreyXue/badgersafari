@@ -37,6 +37,7 @@ public class HomeBadgerBehavior : MonoBehaviour {
         texts[0].text = badgerData.name;
         // if date caught, set date caught
         texts[1].text = $"Caught: {(badgerData.dateCaught != null ? badgerData.dateCaught.ToString("MM/dd/yyyy") : "unknown")}";
+        texts[2].text = $"Fav food: {badgerData.favoriteFood}";
         
         // Set up awake on hover
         interactable = gameObject.GetOrAddComponent<XRSimpleInteractable>();

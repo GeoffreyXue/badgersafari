@@ -9,9 +9,7 @@ using UnityEngine;
 public class HomeSceneManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject normalBadgerPrefab;
-    [SerializeField]
-    private GameObject waterBadgerPrefab;
+    private List<GameObject> badgerPrefabs;
     [SerializeField]
     private GameObject infoPanelPrefab;
     
@@ -24,11 +22,33 @@ public class HomeSceneManager : MonoBehaviour
     private readonly float spawnArea = 5f;
     private readonly float badgerSize = 1f; 
 
+    private readonly List<string> badgerNames = new() {
+        "Bucky Badger",
+        "Alice",
+        "Existential Crisis Bob",
+        "Bob",
+        "Amazon Web Services",
+        "Eleanor of Aquitaine",
+        "2007 Black & Orange Porsche GT3 RS",
+    };
+
+    private readonly List<string> badgerFavoriteFoods = new() {
+        "Cheese Curds",
+        "Rathskeller Burger",
+        "Ginger Root Sesame Chicken",
+        "Ruyi's Beef Hand Pulled Noodles",
+        "Short Stack Pancakes",
+        "Jalisco Steak Fajitas",
+        "McDonald's French Fries",
+        "Grass",
+        "Subway Footlong Italian BMT"
+    };
+
     void Start()
     {
-        if (!normalBadgerPrefab || !waterBadgerPrefab)
+        if (badgerPrefabs.Count != System.Enum.GetValues(typeof(BadgerType)).Length)
         {
-            Debug.LogError("Badger prefabs not set in HomeSceneManager.");
+            Debug.LogError("Not enough badger prefabs not set in HomeSceneManager.");
         }
 
         if (!infoPanelPrefab) {
@@ -44,17 +64,19 @@ public class HomeSceneManager : MonoBehaviour
         {
             BadgerData[] badgers = MainManager.Instance.LoadBadgers();
             Debug.Log($"Loaded {badgers.Length} badgers.");
-            Debug.Log(badgers[0].dateCaught);
             badgerLength = badgers.Length;
 
             foreach (BadgerData badgerData in badgers)
             {
                 Vector3 spawnPosition = GetNonOverlappingSpawnPosition();
                 GameObject newBadger = Instantiate(
-                    badgerData.type == BadgerType.Normal ? normalBadgerPrefab : waterBadgerPrefab, 
+                    badgerPrefabs[(int)badgerData.type], 
                     spawnPosition, 
                     Quaternion.identity
                 );
+
+                // scale badger based on size
+                newBadger.transform.localScale = new Vector3(badgerData.size, badgerData.size, badgerData.size);
 
                 HomeBadgerBehavior badgerBehavior = newBadger.AddComponent<HomeBadgerBehavior>();
                 badgerBehavior.Init(badgerData, infoPanelPrefab);
@@ -66,17 +88,27 @@ public class HomeSceneManager : MonoBehaviour
     {
         // configure catch location and badger to catch
         Random.InitState(System.DateTime.Now.Millisecond);
-        int decision = Random.Range(0, 2);
-        Debug.Log(decision);
-        BadgerType type = decision == 0 ? BadgerType.Normal : BadgerType.Water;
+
+        // choose random badger name
+        string badgerName = badgerNames[Random.Range(0, badgerNames.Count)];
+        // choose random badger favorite food
+        string favoriteFood = badgerFavoriteFoods[Random.Range(0, badgerFavoriteFoods.Count)];
+        // choose random badger type
+        int decision = Random.Range(0, System.Enum.GetValues(typeof(BadgerType)).Length);
+        BadgerType type = (BadgerType)decision;
+        // choose random badger size
+        float size = Random.Range(0.7f, 1.3f);
 
         BadgerData badger = new() {
-            name = $"Badger the {badgerLength + 1}",
+            name = badgerName,
+            favoriteFood = favoriteFood,
             dateCaught = System.DateTime.Now,
-            type = type
+            type = type,
+            size = size
         };
+
         MainManager.Instance.badgerToCatch = badger;
-        MainManager.Instance.catchLocation = type == BadgerType.Normal ? 1 : 2;
+        MainManager.Instance.catchLocation = (int)type + 1;
         transitionManager.GoToScene(MainManager.Instance.catchLocation);
     }
 
