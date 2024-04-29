@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.061540134, g: 0.073350236, b: 0.11185538, a: 1}
+  m_IndirectSpecularColor: {r: 0.23912227, g: 0.2681527, b: 0.46461168, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12446,6 +12446,7 @@ MonoBehaviour:
   audioMissed: {fileID: 8300000, guid: 5757a579d3dc993448d80089e7791239, type: 3}
   splineComputer: {fileID: 1058171594}
   transitionManager: {fileID: 3766000021075124753}
+  speed: 2
 --- !u!1001 &1461683290
 PrefabInstance:
   m_ObjectHideFlags: 0

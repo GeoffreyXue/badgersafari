@@ -42,7 +42,9 @@ public class CatchSceneManager : MonoBehaviour
     private SplineComputer splineComputer;
     [SerializeField]
     [Tooltip("Will be found if not set")]
-    private TransitionManager transitionManager;
+    private TransitionManager transitionManager; 
+    [SerializeField]
+    private int speed;
 
     // Game state
     internal bool isBadgerCaught = false;
@@ -92,7 +94,8 @@ public class CatchSceneManager : MonoBehaviour
 
         GameObject badger = Instantiate(badgerPrefab, spawnPosition, badgerPrefab.transform.rotation);
         // scale based on badger size
-        float size = MainManager.Instance.badgerToCatch.size;
+        //float size = MainManager.Instance.badgerToCatch.size;
+        float size = 1;
         badger.transform.localScale = new Vector3(size, size, size);
 
         CatchBadgerBehavior badgerBehavior = badger.AddComponent<CatchBadgerBehavior>();
@@ -107,7 +110,9 @@ public class CatchSceneManager : MonoBehaviour
         splineFollower.follow = true;
         splineFollower.followMode = SplineFollower.FollowMode.Uniform;
         splineFollower.wrapMode = SplineFollower.Wrap.Loop;
-        splineFollower.followSpeed = 2;
+
+        //splineFollower.followSpeed = 2;
+        splineFollower.followSpeed = speed;
 
         animator = badger.GetComponent<Animator>();
 
