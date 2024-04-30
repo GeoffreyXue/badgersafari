@@ -1524,7 +1524,7 @@ MonoBehaviour:
   badgerPrefabs:
   - {fileID: 9124235743805435535, guid: 0a3b44b3f161e9049aee98dcd8cd6c19, type: 3}
   - {fileID: 357655158175118606, guid: b49ef8a3ee165404f80ba7317d835388, type: 3}
-  - {fileID: 9124235743805435535, guid: 0a3b44b3f161e9049aee98dcd8cd6c19, type: 3}
+  - {fileID: 8236122356730561749, guid: aa77868e1e2b12b42921b86886185580, type: 3}
   infoPanelPrefab: {fileID: 3704650048365918381, guid: 2609335c96e6e2b4fbb28308f159462f, type: 3}
   transitionManager: {fileID: 792402346}
 --- !u!4 &131147666
