@@ -2044,7 +2044,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264282963}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3025,6 +3025,7 @@ GameObject:
   - component: {fileID: 1193195723}
   - component: {fileID: 1193195722}
   - component: {fileID: 1193195721}
+  - component: {fileID: 1193195724}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3058,7 +3059,7 @@ Camera:
   m_GameObject: {fileID: 1193195718}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3261,6 +3262,24 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193195718}
   m_Enabled: 1
+--- !u!114 &1193195724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193195718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FocusMode: -1
+  m_LightEstimationMode: -1
+  m_AutoFocus: 1
+  m_LightEstimation: 0
+  m_FacingDirection: 1
+  m_RenderMode: 0
 --- !u!1001 &1287471004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3734,7 +3753,7 @@ MonoBehaviour:
   m_Camera: {fileID: 1193195720}
   m_OriginBaseGameObject: {fileID: 1719153118}
   m_CameraFloorOffsetObject: {fileID: 73109544}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 1
   m_CameraYOffset: 1.1176
 --- !u!1001 &1847509493
 PrefabInstance:
